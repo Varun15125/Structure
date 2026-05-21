@@ -1,0 +1,36 @@
+public class MajorityElement {
+    public int findMajority(int[] nums) {
+        int count = 0;
+        Integer candidate = null;
+
+        // Phase 1: Finding the candidate
+        for (int num : nums) {
+            if (count == 0) {
+                candidate = num;
+            }
+            count += (num == candidate) ? 1 : -1;
+        }
+
+        // Phase 2: Verification (Optional)
+        // Only needed if the problem doesn't guarantee a majority element exists
+        if (isMajority(nums, candidate)) {
+            return candidate;
+        }
+        
+        return -1; // Or throw an exception
+    }
+
+    private boolean isMajority(int[] nums, int candidate) {
+        int actualCount = 0;
+        for (int num : nums) {
+            if (num == candidate) actualCount++;
+        }
+        return actualCount > nums.length / 2;
+    }
+
+    public static void main(String[] args) {
+        MajorityElement sol = new MajorityElement();
+        int[] nums = {2, 2, 1, 1, 1, 2, 2};
+        System.out.println("The majority element is: " + sol.findMajority(nums));
+    }
+}
